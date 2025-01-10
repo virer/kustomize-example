@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "myapps.fullname" . }}-web-deployment
+  labels:
+  {{- include "myapps.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.webDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: web
+    {{- include "myapps.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: web
+      {{- include "myapps.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - env:
+        - name: KUBERNETES_CLUSTER_DOMAIN
+          value: {{ quote .Values.kubernetesClusterDomain }}
+        image: {{ .Values.webDeployment.nginx.image.repository }}:{{ .Values.webDeployment.nginx.image.tag
+          | default .Chart.AppVersion }}
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {{- toYaml .Values.webDeployment.nginx.resources | nindent 10 }}

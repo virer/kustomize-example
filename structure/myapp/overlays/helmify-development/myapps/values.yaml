@@ -1,0 +1,19 @@
+kubernetesClusterDomain: cluster.local
+myapp:
+  ports:
+  - name: 80-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  type: ClusterIP
+webDeployment:
+  nginx:
+    image:
+      repository: registry.redhat.io/rhel9/nginx-120
+      tag: latest
+    resources:
+      limits:
+        cpu: 700m
+      requests:
+        cpu: 500m
+  replicas: 2
