@@ -1,0 +1,7 @@
+resources:
+ - ../../base/
+
+patches:
+ - path: cpu_count.yaml
+ - path: replica_count.yaml  
+
