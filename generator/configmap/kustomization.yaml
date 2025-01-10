@@ -1,0 +1,7 @@
+---
+configMapGenerator:
+  - name: my-java-props-cfgmap
+    files:
+    - config/config.properties
+generatorOptions:
+  disableNameSuffixHash: true 
